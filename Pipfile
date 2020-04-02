@@ -1,3 +1,5 @@
+web: python main.py
+
 [[source]]
 name = "pypi"
 url = "https://pypi.org/simple"
