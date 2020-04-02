@@ -42,13 +42,13 @@ def get_kernels_url():
     m = now.month
     d = date.day
     h = date.hour
-    kernels_url = y + '年' + m + '月'+ d + '日' + h + '時点での\n'
+    kernels_url = y + '年' + m + '月'+ d + '日' + h + '時の\n'
     count = 1
     for kernel_info in kernels_list:
         title = getattr(kernel_info, 'title')
         url = getattr(kernel_info, 'ref')
-        kernels_url += '{}位のノート\n'.format(count)
-        kernels_url += 'タイトル : {}\n'.format(title)
+        kernels_url += '{}位 : '.format(count)
+        kernels_url += '*{}\n'.format(title)
         kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
         count += 1
     logger.debug('Get {} kernels'.format(len(kernels_list)))
