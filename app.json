@@ -1,0 +1,47 @@
+{
+    "name": "Kaggle Kernel Notification",
+    "description": "Notify new kaggle kernels to Slack or LINE",
+    "repository": "https://github.com/Doarakko/kaggle-kernel-notification",
+    "logo": "https://avatars0.githubusercontent.com/u/1336944",
+    "keywords": [
+        "kaggle",
+        "kernel",
+        "notification",
+        "slack",
+        "line"
+    ],
+    "env": {
+        "SLACK_WEBHOOK_URL": {
+            "description": "You only need to enter slack or line.",
+            "value": "your webhook url"
+        },
+        "LINE_NOTIFY_TOKEN": {
+            "description": "You only need to enter slack or line.",
+            "value": "your line notify token"
+        },
+        "POST": {
+            "description": "slack or line",
+            "value": "slack"
+        },
+        "COMPETITION_NAME": {
+            "description": "Get competition name using kaggle command.",
+            "value": "jigsaw-unintended-bias-in-toxicity-classification"
+        },
+        "KAGGLE_KEY": {
+            "description": "kaggle key",
+            "value": "your key"
+        },
+        "KAGGLE_USERNAME": {
+            "description": "kaggle username",
+            "value": "your username"
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-python"
+        }
+    ],
+    "addons": [
+        "scheduler:standard"
+    ]
+}
