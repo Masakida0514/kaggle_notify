@@ -38,7 +38,11 @@ def get_kernels_url():
     )
 
     now = datetime.datetime.utcnow()
-    kernels_url = '{}時点での\n'.format(now)
+    y = now.year
+    m = now.month
+    d = date.day
+    h = date.hour
+    kernels_url = y + '年' + m + '月'+ d + '日' + h + '時点での\n'
     count = 1
     for kernel_info in kernels_list:
         title = getattr(kernel_info, 'title')
