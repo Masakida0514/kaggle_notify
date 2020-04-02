@@ -40,8 +40,8 @@ def get_kernels_url():
     now = datetime.datetime.utcnow()
     y = now.year
     m = now.month
-    d = date.day
-    h = date.hour
+    d = now.day
+    h = now.hour
     kernels_url = y + '年' + m + '月'+ d + '日' + h + '時の\n'
     count = 1
     for kernel_info in kernels_list:
