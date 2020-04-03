@@ -44,10 +44,7 @@ def get_kernels_url():
     h = str(now.hour)
     kernels_url = y + '年' + m + '月'+ d + '日' + h + '時の\n'
 
-    count = 0
     for kernel_info in kernels_list:
-        if count == 9:
-            kernels_url += 'NEED_KAIGYOU'
         title = getattr(kernel_info, 'title')
         url = getattr(kernel_info, 'ref')
         kernels_url += '*{}\n'.format(title)
@@ -77,7 +74,4 @@ def post_line(message):
 
 if __name__ == "__main__":
     kernels_url = get_kernels_url()
-    kernels_url = kernels_url.split('NEED_KAIGYOU')
-    post_line(message=kernels_url[0])
-    post_line(message=kernels_url[1])
     post_line(message=kernels_url)
