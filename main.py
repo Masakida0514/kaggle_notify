@@ -32,7 +32,7 @@ def get_kernels_url():
     api.authenticate()
     kernels_list = api.kernels_list(
         competition=COMPETITION_NAME,
-        page_size=10,
+        page_size=20,
         language='python',
         sort_by='scoreAscending'
     )
@@ -43,17 +43,18 @@ def get_kernels_url():
     d = str(now.day)
     h = str(now.hour)
     kernels_url = y + '年' + m + '月'+ d + '日' + h + '時の\n'
-    count = 1
-    print(kernels_list)
-    # for kernel_info in kernels_list:
-    #     title = getattr(kernel_info, 'title')
-    #     url = getattr(kernel_info, 'ref')
-    #     kernels_url += '{}位 : '.format(count)
-    #     kernels_url += '*{}\n'.format(title)
-    #     kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
-    #     count += 1
-    # logger.debug('Get {} kernels'.format(len(kernels_list)))
-    # return kernels_url
+    count = 0
+    for kernel_info in kernels_list:
+        title = getattr(kernel_info, 'title')
+        url = getattr(kernel_info, 'ref')
+        kernels_url += '*{}\n'.format(title)
+        kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
+        count += 1
+        if count == 9:
+            kernels_url += 'MasakiMoriKaigyouYou'
+    logger.debug('Get {} kernels'.format(len(kernels_list)))
+    kernels_url.split('MasakiMoriKaigyouYou')
+    return kernels_url
 
 def post_line(message):
     # message = '\n{}\n{}'.format(COMPETITION_NAME, message)
@@ -76,4 +77,5 @@ def post_line(message):
 
 if __name__ == "__main__":
     kernels_url = get_kernels_url()
-    post_line(message=kernels_url)
+    post_line(message=kernels_url[0])
+    post_line(message=kernels_url[1])
