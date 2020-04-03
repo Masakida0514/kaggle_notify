@@ -80,3 +80,4 @@ if __name__ == "__main__":
     post_line(message=kernels_url[0])
     post_line(message=kernels_url[1])
     print(kernels_url[0])
+    print(kernels_url)
