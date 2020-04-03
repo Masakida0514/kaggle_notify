@@ -45,15 +45,16 @@ def get_kernels_url():
     kernels_url = y + '年' + m + '月'+ d + '日' + h + '時の\n'
     count = 0
     for kernel_info in kernels_list:
+        count = int(count)
+        if count == 9:
+            kernels_url += 'NEED_KAIGYOU'
         title = getattr(kernel_info, 'title')
         url = getattr(kernel_info, 'ref')
         kernels_url += '*{}\n'.format(title)
         kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
         count += 1
-        if count == 9:
-            kernels_url += 'MasakiMoriKaigyouYou'
     logger.debug('Get {} kernels'.format(len(kernels_list)))
-    kernels_url.split('MasakiMoriKaigyouYou')
+    kernels_url.split('NEED_KAIGYOU')
     return kernels_url
 
 def post_line(message):
@@ -80,4 +81,4 @@ if __name__ == "__main__":
     post_line(message=kernels_url[0])
     post_line(message=kernels_url[1])
     print(kernels_url[0])
-    print(kernels_url)
+    print(type(kernels_url))
