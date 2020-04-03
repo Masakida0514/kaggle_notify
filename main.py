@@ -34,7 +34,7 @@ def get_kernels_url():
         competition=COMPETITION_NAME,
         page_size=10,
         language='python',
-        sort_by='scoreDescending'
+        sort_by='scoreAscending'
     )
 
     now = datetime.datetime.utcnow()
@@ -44,15 +44,16 @@ def get_kernels_url():
     h = str(now.hour)
     kernels_url = y + '年' + m + '月'+ d + '日' + h + '時の\n'
     count = 1
-    for kernel_info in kernels_list:
-        title = getattr(kernel_info, 'title')
-        url = getattr(kernel_info, 'ref')
-        kernels_url += '{}位 : '.format(count)
-        kernels_url += '*{}\n'.format(title)
-        kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
-        count += 1
-    logger.debug('Get {} kernels'.format(len(kernels_list)))
-    return kernels_url
+    print(kernels_list)
+    # for kernel_info in kernels_list:
+    #     title = getattr(kernel_info, 'title')
+    #     url = getattr(kernel_info, 'ref')
+    #     kernels_url += '{}位 : '.format(count)
+    #     kernels_url += '*{}\n'.format(title)
+    #     kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
+    #     count += 1
+    # logger.debug('Get {} kernels'.format(len(kernels_list)))
+    # return kernels_url
 
 def post_line(message):
     # message = '\n{}\n{}'.format(COMPETITION_NAME, message)
