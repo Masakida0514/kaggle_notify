@@ -26,35 +26,53 @@ handler.setFormatter(log_fmt)
 logger.addHandler(handler)
 logger.setLevel(DEBUG)
 
+def get_time_now():
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+    y = str(now.year)
+    m = str(now.month)
+    d = str(now.day)
+    h = str(now.hour)
+    message = y + '年' + m + '月'+ d + '日' + h + '時のカーネルについてお知らせします!'
+    return message
 
 def get_kernels_url():
     api = KaggleApi()
     api.authenticate()
     kernels_list = api.kernels_list(
         competition=COMPETITION_NAME,
-        page_size=20,
+        page_size=18,
         language='python',
         sort_by='scoreAscending'
     )
+    return kernels_list
 
-    now = datetime.datetime.utcnow()
-    y = str(now.year)
-    m = str(now.month)
-    d = str(now.day)
-    h = str(now.hour)
-    kernels_url = y + '年' + m + '月'+ d + '日' + h + '時の\n'
+def get_kernels_url_2():
+    api = KaggleApi()
+    api.authenticate()
+    kernels_list = api.kernels_list(
+        competition=COMPETITION_NAME,
+        page_size=18,
+        language='python',
+    )
+    return kernels_list
 
-    for kernel_info in kernels_list:
+def make_kernels_url():
+    kernels_url = ''
+    kernels_url_2 = ''
+    for i, kernel_info in enumerate(kernels_list):
         title = getattr(kernel_info, 'title')
         url = getattr(kernel_info, 'ref')
-        kernels_url += '*{}\n'.format(title)
-        kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
+        if i <= 8:
+            kernels_url += '*{}\n'.format(title)
+            kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
+        else:
+            kernels_url_2 += '*{}\n'.format(title)
+            kernels_url_2 += 'url : https://www.kaggle.com/{}\n'.format(url)
     logger.debug('Get {} kernels'.format(len(kernels_list)))
 
-    return kernels_url
+    return kernels_url, kernels_url_2
 
 def post_line(message):
-    # message = '\n{}\n{}'.format(COMPETITION_NAME, message)
     message = '\n{}'.format(message)
 
     headers = {
@@ -73,5 +91,14 @@ def post_line(message):
 
 
 if __name__ == "__main__":
+    time_now = get_time_now()
     kernels_url = get_kernels_url()
+    kernels_url_2 = get_kernels_url_2()
+    kernels_url, kernels_url_2 = make_kernels_url()
+
+    post_line(message=time_now)
+    post_line(message='順位順')
     post_line(message=kernels_url)
+    post_line(message='ホットな奴ら')
+    post_line(message=kernels_url_2)
+    post_line(message='更新終了：いざ勉強')
