@@ -35,7 +35,7 @@ def get_time_now():
     message = y + '年' + m + '月'+ d + '日' + h + '時のカーネルについてお知らせします!'
     return message
 
-def get_kernels_list():
+def make_kernels_url():
     api = KaggleApi()
     api.authenticate()
     kernels_list = api.kernels_list(
@@ -44,9 +44,24 @@ def get_kernels_list():
         language='python',
         sort_by='scoreAscending'
     )
-    return kernels_list
+    kernels_url = ''
+    kernels_url_2 = ''
+    i = 0
+    for kernel_info in kernels_list:
+        title = getattr(kernel_info, 'title')
+        url = getattr(kernel_info, 'ref')
+        if i <= 8:
+            kernels_url += '*{}\n'.format(title)
+            kernels_url += 'url : https://www.kaggle.com/{}\n'.format(url)
+        else:
+            kernels_url_2 += '*{}\n'.format(title)
+            kernels_url_2 += 'url : https://www.kaggle.com/{}\n'.format(url)
+        i += 1
+    logger.debug('Get {} kernels'.format(len(kernels_list)))
 
-def get_kernels_list_2():
+    return kernels_url, kernels_url_2
+
+def make_kernels_url_2():
     api = KaggleApi()
     api.authenticate()
     kernels_list = api.kernels_list(
@@ -54,9 +69,6 @@ def get_kernels_list_2():
         page_size=18,
         language='python',
     )
-    return kernels_list
-
-def make_kernels_url(kernels_list):
     kernels_url = ''
     kernels_url_2 = ''
     i = 0
@@ -94,10 +106,8 @@ def post_line(message):
 
 def main():
     time_now = get_time_now()
-    kernels_list = get_kernels_list()
-    kernels_list_2 = get_kernels_list_2()
-    kernels_url, kernels_url_2 = make_kernels_url(kernels_list)
-    hot_url, hot_url_2 = make_kernels_url(kernels_url_2)
+    kernels_url, kernels_url_2 = make_kernels_url()
+    hot_url, hot_url_2 = make_kernels_url_2()
 
     post_line(message='順位順')
     post_line(message=kernels_url)
