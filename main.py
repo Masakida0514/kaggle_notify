@@ -59,7 +59,8 @@ def get_kernels_list_2():
 def make_kernels_url(kernels_list):
     kernels_url = ''
     kernels_url_2 = ''
-    for i, kernel_info in enumerate(kernels_list):
+    i = 0
+    for kernel_info in kernels_list:
         title = getattr(kernel_info, 'title')
         url = getattr(kernel_info, 'ref')
         if i <= 8:
@@ -68,6 +69,7 @@ def make_kernels_url(kernels_list):
         else:
             kernels_url_2 += '*{}\n'.format(title)
             kernels_url_2 += 'url : https://www.kaggle.com/{}\n'.format(url)
+        i += 1
     logger.debug('Get {} kernels'.format(len(kernels_list)))
 
     return kernels_url, kernels_url_2
