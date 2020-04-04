@@ -56,7 +56,7 @@ def get_kernels_url_2():
     )
     return kernels_list
 
-def make_kernels_url():
+def make_kernels_url(kernels_list):
     kernels_url = ''
     kernels_url_2 = ''
     for i, kernel_info in enumerate(kernels_list):
@@ -96,9 +96,9 @@ if __name__ == "__main__":
     kernels_url_2 = get_kernels_url_2()
     kernels_url, kernels_url_2 = make_kernels_url()
 
-    post_line(message=time_now)
     post_line(message='順位順')
     post_line(message=kernels_url)
     post_line(message='ホットな奴ら')
     post_line(message=kernels_url_2)
     post_line(message='更新終了：いざ勉強')
+    post_line(message=time_now)
