@@ -35,7 +35,7 @@ def get_time_now():
     message = y + '年' + m + '月'+ d + '日' + h + '時のカーネルについてお知らせします!'
     return message
 
-def get_kernels_url():
+def get_kernels_list():
     api = KaggleApi()
     api.authenticate()
     kernels_list = api.kernels_list(
@@ -46,7 +46,7 @@ def get_kernels_url():
     )
     return kernels_list
 
-def get_kernels_url_2():
+def get_kernels_list_2():
     api = KaggleApi()
     api.authenticate()
     kernels_list = api.kernels_list(
@@ -90,15 +90,24 @@ def post_line(message):
         logger.error(e)
 
 
-if __name__ == "__main__":
+def main():
     time_now = get_time_now()
-    kernels_url = get_kernels_url()
-    kernels_url_2 = get_kernels_url_2()
-    kernels_url, kernels_url_2 = make_kernels_url()
+    kernels_list = get_kernels_list()
+    kernels_list_2 = get_kernels_list_2()
+    kernels_url, kernels_url_2 = make_kernels_url(kernels_list)
+    hot_url, hot_url_2 = make_kernels_url(kernels_url_2)
 
     post_line(message='順位順')
     post_line(message=kernels_url)
-    post_line(message='ホットな奴ら')
     post_line(message=kernels_url_2)
+
+    post_line(message='ホットな奴ら')
+    post_line(message=hot_url)
+    post_line(message=hot_url_2)
+
     post_line(message='更新終了：いざ勉強')
     post_line(message=time_now)
+
+if __name__ == "__main__":
+    main()
+
